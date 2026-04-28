@@ -1,4 +1,1 @@
-variable "key-pair" {
-type = string
-
-}
+aws_region = "us-east-1a"
