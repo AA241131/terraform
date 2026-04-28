@@ -2,7 +2,7 @@
 #Crear una instancia de EC2
 
 provider "aws" {
-  region  = var.aws_regions
+  region  = var.aws_region
 }
 
 variable "key-pair" {
@@ -75,13 +75,28 @@ resource "aws_security_group" "test-terraform-sg" {
 
 #crear la instancia
 resource "aws_instance" "test-terraform-ec2" {
-  ami                    = "ami-098e39bafa7e7303d"
-  instance_type          = "t3.micro"
+  ami                    = var.AMI
+  instance_type          = "t2.micro"
   key_name               = var.key-pair
   vpc_security_group_ids = [aws_security_group.test-terraform-sg.id]
   subnet_id              = aws_subnet.vpc-subnet.id
   tags = {
     Name      = "test-terraform-ec2"
   }
+
+  connection {
+    type     = "ssh"
+    user     = "root"
+    host     = self.public_ip
+    private_key = file("/etc/ssh/ssh_host_ed25519_key")
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "mkdir /home/testprovisioner",
+      "echo "Hola Mundo" > /home/testprovisioner/test.txt",
+    ]
+  }
 }
+
 
