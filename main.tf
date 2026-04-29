@@ -86,7 +86,7 @@ resource "aws_instance" "test-terraform-ec2" {
 
   connection {
     type     = "ssh"
-    user     = "root"
+    user     = "ec2-user"
     host     = self.public_ip
     private_key = file("/etc/ssh/ssh_host_ed25519_key")
   }
@@ -94,7 +94,7 @@ resource "aws_instance" "test-terraform-ec2" {
   provisioner "remote-exec" {
     inline = [
       "mkdir /home/testprovisioner",
-      "echo "Hola Mundo" > /home/testprovisioner/test.txt",
+      touch archivo.test
     ]
   }
 }
