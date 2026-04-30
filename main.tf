@@ -100,8 +100,9 @@ resource "aws_instance" "test-terraform-ec2" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo yum install httpd",
+      "sudo yum install httpd -y",
       "sudo systemctl start httpd",
+      "sudo install git -y",
       "sudo git clone https://github.com/mauricioamendola/chaos-monkey-app.git /var/www/html",
       "sudo mv /var/www/html/website/* /var/www/html"
       ]
