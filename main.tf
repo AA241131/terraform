@@ -52,6 +52,12 @@ resource "aws_route_table" "terraform-rt" {
   }
 }
 
+#Asociar la tabla a la subnet
+resource "aws_route_table_association" "example" {
+  subnet_id      = aws_subnet.vpc-subnet.id
+  route_table_id = aws_route_table.terraform-rt.id
+}
+
 #crear el security group 
 resource "aws_security_group" "test-terraform-sg" {
   name = "test-terraform-sg"
@@ -80,6 +86,7 @@ resource "aws_instance" "test-terraform-ec2" {
   key_name               = var.key-pair
   vpc_security_group_ids = [aws_security_group.test-terraform-sg.id]
   subnet_id              = aws_subnet.vpc-subnet.id
+  iam_instance_profile   = "LabInstanceProfile"  #para troubleshooting
   tags = {
     Name      = "test-terraform-ec2"
   }
