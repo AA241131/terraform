@@ -13,7 +13,3 @@ variable "AMI" {
   description = "Variable para la AMI"
 }
 
-variable "llave_privada" {
-  type = string
-  description = "llave privada vockey"
-}
