@@ -95,7 +95,7 @@ resource "aws_instance" "test-terraform-ec2" {
     type     = "ssh"
     user     = "ec2-user"
     host     = self.public_ip
-    private_key = file("/home/repositorio/vockey.pem")
+    private_key = file("/home/repositorio/labuser.pem")
   }
 
   provisioner "remote-exec" {
