@@ -94,6 +94,24 @@ resource "aws_vpc_security_group_egress_rule" "sg-egress" {
   cidr_ipv4   = "0.0.0.0/0"   
 }
 
+#crear bucket
+resource "aws_s3_bucket" "bucket-S3" {
+  bucket = "terraform-state-aacosta"
+}
+
+resource "aws_db_instance" "base-de-datos" {
+  allocated_storage    = 1
+  db_name              = "terraform-mydb"
+  engine               = "mysql"
+  engine_version       = "8.4.8"
+  instance_class       = "db.t4g.micro"
+  username             = "foo"
+  password             = "foobarbaz"
+  parameter_group_name = "default.mysql8.0"
+  skip_final_snapshot  = true
+}
+
+
 #crear la instancia
 resource "aws_instance" "test-terraform-ec2" {
   ami                    = var.AMI
