@@ -84,6 +84,7 @@ resource "aws_vpc_security_group_ingress_rule" "http-ingreso" {
   from_port         = 80
   to_port           = 80
   cidr_ipv4         = "0.0.0.0/0"
+}
 
 #regla de egreso de sg
 resource "aws_vpc_security_group_egress_rule" "sg-egress" {
