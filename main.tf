@@ -62,21 +62,35 @@ resource "aws_route_table_association" "example" {
 resource "aws_security_group" "test-terraform-sg" {
   name = "test-terraform-sg"
   vpc_id = aws_vpc.test-terraform-vpc.id
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   tags = {
     Name      = "test-terraform-sg"
   }
+}
+
+#crear regla en ingreso ssh en sg
+resource "aws_vpc_security_group_ingress_rule" "ssh-ingreso" {
+  security_group_id = aws_security_group.test-terraform-sg.id
+
+  cidr_ipv4   = "0.0.0.0/0"
+  from_port   = 22
+  ip_protocol = "tcp"
+  to_port     = 22
+}
+
+# permitir http 
+resource "aws_vpc_security_group_ingress_rule" "http-ingreso" {
+  security_group_id = aws_security_group.test-terraform-sg.id
+  ip_protocol       = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_ipv4         = "0.0.0.0/0"
+
+#regla de egreso de sg
+resource "aws_vpc_security_group_egress_rule" "sg-egress" {
+  security_group_id = aws_security_group.test-terraform-sg.id
+
+  ip_protocol = "-1"          # todos los protocolos
+  cidr_ipv4   = "0.0.0.0/0"   
 }
 
 #crear la instancia
@@ -95,14 +109,15 @@ resource "aws_instance" "test-terraform-ec2" {
     type     = "ssh"
     user     = "ec2-user"
     host     = self.public_ip
-    private_key = file("/home/repositorio/labuser.pem")
+    private_key = file("/home/ec2-user/repositorio/labsuser.pem")
   }
 
   provisioner "remote-exec" {
     inline = [
       "sudo yum install httpd -y",
       "sudo systemctl start httpd",
-      "sudo install git -y",
+      "sudo systemctl enable httpd",
+      "sudo yum install git -y",
       "sudo git clone https://github.com/mauricioamendola/chaos-monkey-app.git /var/www/html",
       "sudo mv /var/www/html/website/* /var/www/html"
       ]

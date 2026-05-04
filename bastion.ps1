@@ -4,8 +4,6 @@ $sgBastion = aws ec2 create-security-group `
   --query 'GroupId' `
   --output text
 
-#aws ec2 describe-security-groups --group-ids $sgBastion
-
 aws ec2 authorize-security-group-ingress `
   --group-id $sgBastion `
   --protocol tcp `
