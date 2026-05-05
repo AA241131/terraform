@@ -1,5 +1,5 @@
 provider "aws" {
-region = "us-east-1"
+region = var.region
 }
 
 #crear bucket
@@ -14,13 +14,14 @@ terraform {
     bucket = "terraform-state-aacosta"
     #dynamodb_table = "terraformmydb"
     key    = "terraform.tfstate"
-    region = "us-east-1"
+    region = var.region
   }
 }
 
 module "deploy-instance" {
-source = "./modules/custom-deploy"
-count = 1
+  source = "./modules/custom-deploy"
+  count = 1
+  
 }
 
 output "ec2-instance-id" {
