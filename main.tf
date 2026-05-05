@@ -99,23 +99,12 @@ resource "aws_s3_bucket" "bucket-S3" {
   bucket = "terraform-state-aacosta"
 }
 
-resource "aws_db_instance" "base-de-datos" {
-  allocated_storage    = 1
-  db_name              = "terraformmydb"
-  engine               = "mysql"
-  engine_version       = "8.4.8"
-  instance_class       = "db.t4g.micro"
-  username             = "foo"
-  password             = "foobarbaz"
-  parameter_group_name = "default.mysql8.0"
-  skip_final_snapshot  = true
-}
-
+#state.tf
 terraform {  
   backend "s3" {
-    encrypt = true
+    #encrypt = true
     bucket = "terraform-state-AACOSTA"
-    dynamodb_table = "terraformmydb"
+    #dynamodb_table = "terraformmydb"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
