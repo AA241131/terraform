@@ -1,7 +1,3 @@
-#Crear una instancia de EC2
-provider "aws" {
-region = "us-east-1"
-}
 
 variable "key-pair" {
   type = string
