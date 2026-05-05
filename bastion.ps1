@@ -28,3 +28,7 @@ aws ec2 run-instances `
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=bastion}]" `
   --iam-instance-profile Name="LabInstanceProfile" `
   --user-data file://user-data.sh
+
+  aws s3api create-bucket `
+    --bucket terraform-state-aacosta `
+    --region us-east-1
