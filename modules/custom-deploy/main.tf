@@ -90,22 +90,6 @@ resource "aws_vpc_security_group_egress_rule" "sg-egress" {
   cidr_ipv4   = "0.0.0.0/0"   
 }
 
-#crear bucket
-resource "aws_s3_bucket" "bucket-S3" {
-  bucket = "terraform-state-aacosta"
-}
-
-#state.tf
-terraform {  
-  backend "s3" {
-    #encrypt = true
-    bucket = "terraform-state-aacosta"
-    #dynamodb_table = "terraformmydb"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
-}
-
 #crear la instancia
 resource "aws_instance" "test-terraform-ec2" {
   ami                    = var.AMI
