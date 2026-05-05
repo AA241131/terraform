@@ -2,19 +2,16 @@ provider "aws" {
 region = var.region
 }
 
-#crear bucket
-resource "aws_s3_bucket" "bucket-S3" {
-  bucket = "terraform-state-aacosta"
-}
 
-#state.tf
+
+#state.tf, bucket tiene que estar previamente creado
 terraform {  
   backend "s3" {
     #encrypt = true
     bucket = "terraform-state-aacosta"
     #dynamodb_table = "terraformmydb"
     key    = "terraform.tfstate"
-    region = var.region
+    region = "us-east-1"
   }
 }
 
