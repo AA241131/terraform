@@ -1,8 +1,3 @@
-variable "region" {
-  type = string
-  description = "Variable para la region"
-}
-
 variable "vpc_cidr" {
   type = string
   description = "Variable para el CIDR block"
@@ -11,4 +6,9 @@ variable "vpc_cidr" {
 variable "AMI" {
   type = string
   description = "Variable para la AMI"
+}
+
+variable "key-pair" {
+  type = string
+  default = "vockey"
 }

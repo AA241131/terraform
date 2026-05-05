@@ -1,9 +1,4 @@
 
-variable "key-pair" {
-  type = string
-  default = "vockey"
-}
-
 # Crear el VPC
 resource "aws_vpc" "test-terraform-vpc" {
   cidr_block = "172.16.0.0/16"
@@ -12,7 +7,7 @@ resource "aws_vpc" "test-terraform-vpc" {
   }
 }
 
-#Crear la subnet
+#Crear la Subnet
 resource "aws_subnet" "vpc-subnet" {
   vpc_id     = aws_vpc.test-terraform-vpc.id
   cidr_block = "172.16.1.0/24"
@@ -23,7 +18,7 @@ resource "aws_subnet" "vpc-subnet" {
   }
 }
 
-#crear el internet gateway
+#crear el Internet Gateway
 resource "aws_internet_gateway" "test-terraform-ig" {
   vpc_id = aws_vpc.test-terraform-vpc.id
 
