@@ -1,5 +1,5 @@
 #crear el Internet Gateway
-resource "aws_internet_gateway" "test-terraform-ig" {
+resource "aws_internet_gateway" "terraform-ig" {
   vpc_id = var.vpc_id
 
   tags = {
