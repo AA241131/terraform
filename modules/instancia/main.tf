@@ -1,12 +1,3 @@
-
-# Crear el VPC
-resource "aws_vpc" "test-terraform-vpc" {
-  cidr_block = "172.16.0.0/16"
-  tags = {
-    Name      = "test-terraform-vpc"
-  }
-}
-
 #Crear la Subnet
 resource "aws_subnet" "vpc-subnet" {
   vpc_id     = aws_vpc.test-terraform-vpc.id
@@ -48,11 +39,11 @@ resource "aws_route_table_association" "example" {
 }
 
 #crear el security group 
-resource "aws_security_group" "test-terraform-sg" {
-  name = "test-terraform-sg"
-  vpc_id = aws_vpc.test-terraform-vpc.id
+resource "aws_security_group" "terraform-ec2-sg" {
+  name = "ssh-http-access"
+  vpc_id = var.vpc_id
   tags = {
-    Name      = "test-terraform-sg"
+    Name      = "ssh-http-access"
   }
 }
 
