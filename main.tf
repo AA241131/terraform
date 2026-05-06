@@ -26,6 +26,8 @@ module "desplegar-red" {
   #variables para el modulo
   vpc_id = module.desplegar-vpc.vpc-id  
   subnet_id = [module.desplegar-instancia1.subnet-id, module.desplegar-instancia2.subnet-id]
+  ec2_instance_id = [module.desplegar-instancia1.ec2-instance-id, module.desplegar-instancia2.ec2-instance-id]
+  
 }
 
 module "desplegar-instancia1" {

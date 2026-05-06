@@ -65,3 +65,35 @@ resource "aws_lb" "terraform-lb" {
   security_groups    = [aws_security_group.ssh-http-access-sg.id]
   subnets            = var.subnet_id
 }
+
+
+resource "aws_lb_target_group" "target_group" {
+  name     = "target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+}
+
+resource "aws_lb_target_group_attachment" "asociacion" {
+  target_group_arn = aws_lb_target_group.target_group.arn
+  target_id        = var.ec2_instance_id[0] # Asocia la primera instancia EC2 al target group
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "asociacion" {
+  target_group_arn = aws_lb_target_group.target_group.arn
+  target_id        = var.ec2_instance_id[1] # Asocia la segunda instancia EC2 al target group
+  port             = 80
+}
+
+resource "aws_lb_listener" "ALB_listener" {
+  load_balancer_arn = aws_lb.terraform-lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+  
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}

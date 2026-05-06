@@ -7,3 +7,8 @@ variable "subnet_id" {
   type = list(string)
   description = "Variable para el ID de las subnets"
 }
+
+variable "ec2_instance_id" {
+  type = list(string)
+  description = "Variable para las ID de las instancias EC2"
+}
