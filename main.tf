@@ -2,8 +2,6 @@ provider "aws" {
 region = var.region
 }
 
-
-
 #state.tf, bucket tiene que estar previamente creado
 terraform {  
   backend "s3" {
@@ -15,18 +13,26 @@ terraform {
   }
 }
 
-module "deploy-instance" {
-  source = "./modules/custom-deploy"
+module "desplegar-vpc" {
+  source = "./modules/vpc"
+  #variables para el modulo
+  vpc_cidr   = "10.0.0.0/16"
+  nombre_vpc = "vpc-practico-3tier"
+}
+
+module "desplegar-instancia" {
+  source = "./modules/instancia"
   count = 1
   
   #variables para el modulo
-  vpc_cidr   = "172.16.0.0/16"
   AMI        = "ami-098e39bafa7e7303d"
+  vpc_id     = module.desplegar-vpc.vpc-id
+
 }
 
 #salida desde el modulo
 output "ec2-instance-id" {
-value = module.deploy-instance.0.ec2-instance-id
+value = module.desplegar-instancia.0.ec2-instance-id
 }
 
 
