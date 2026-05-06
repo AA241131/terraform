@@ -74,13 +74,13 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id   = var.vpc_id
 }
 
-resource "aws_lb_target_group_attachment" "asociacion" {
+resource "aws_lb_target_group_attachment" "asociacion1" {
   target_group_arn = aws_lb_target_group.target_group.arn
   target_id        = var.ec2_instance_id[0] # Asocia la primera instancia EC2 al target group
   port             = 80
 }
 
-resource "aws_lb_target_group_attachment" "asociacion" {
+resource "aws_lb_target_group_attachment" "asociacion2" {
   target_group_arn = aws_lb_target_group.target_group.arn
   target_id        = var.ec2_instance_id[1] # Asocia la segunda instancia EC2 al target group
   port             = 80
