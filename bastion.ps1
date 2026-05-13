@@ -29,6 +29,6 @@ aws ec2 run-instances `
   --iam-instance-profile Name="LabInstanceProfile" `
   --user-data file://user-data.sh
 
-  aws s3api create-bucket `
-    --bucket terraform-state-aacosta `
-    --region us-east-1
+ # aws s3api create-bucket `
+ #   --bucket terraform-state-aacosta `
+ #   --region us-east-1
